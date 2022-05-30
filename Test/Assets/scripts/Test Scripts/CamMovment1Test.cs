@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CamMovment : MonoBehaviour
+public class CamMovment1Test : MonoBehaviour
 {
     float mouseX;
     float mouseY;
@@ -62,19 +62,20 @@ public class CamMovment : MonoBehaviour
         //SaveTarget
         if(Input.GetKeyDown(KeyCode.Alpha1))
         {
-            save = new TargertJson();
-            save.cam = transform.localRotation;
-            save.mainBody = body.localRotation;
-            json = JsonUtility.ToJson(save);
-            Debug.Log(json);
+            //save = new TargertJson();
+            //save.cam = transform.localRotation;
+            //save.mainBody = body.localRotation;
+            //json = JsonUtility.ToJson(save);
+            //Debug.Log(json);
+
         }
 
         //LoadTarget
         if(Input.GetKeyDown(KeyCode.Q))
         {
-            TargertJson loadeRotationData = JsonUtility.FromJson<TargertJson>(json);
-            transform.localRotation = loadeRotationData.cam;
-            body.localRotation = loadeRotationData.mainBody;
+            //TargertJson loadeRotationData = JsonUtility.FromJson<TargertJson>(json);
+            //transform.localRotation = loadeRotationData.cam;
+            //body.localRotation = loadeRotationData.mainBody;
         }
 
 
@@ -91,9 +92,25 @@ public class CamMovment : MonoBehaviour
         body.Rotate(Vector3.up * mouseX);
     }
 
+    void Save(int num)
+    {
+        save = new TargertJson();
+        save.cam.Add(transform.localRotation);
+        save.mainBody.Add(body.localRotation);
+        json = JsonUtility.ToJson(save);
+        Debug.Log(json);
+    }
+
+    void Load(int num)
+    {
+        TargertJson loadeRotationData = JsonUtility.FromJson<TargertJson>(json);
+        transform.localRotation = loadeRotationData.cam[num-1];
+        body.localRotation = loadeRotationData.mainBody[num-1];
+    }
+
     private class TargertJson
     {
-        public Quaternion cam;
-        public Quaternion mainBody;
+        public List <Quaternion> cam;
+        public List <Quaternion> mainBody;
     }
 }
