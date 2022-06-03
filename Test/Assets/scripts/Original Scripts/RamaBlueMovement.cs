@@ -35,7 +35,7 @@ public class RamaBlueMovement : MonoBehaviour
     void Update()
     {
         SetInputs();
-        ClampAndRotation();   
+        ClampAndRotation();
     }
 
     private void SetInputs()
@@ -46,13 +46,13 @@ public class RamaBlueMovement : MonoBehaviour
         //Setting and inverting the Value of the Y Axises movement according to built in inputs (Numpad 8 for UP, Numpad 2 for DOWN)
         verticalMovement -= Input.GetAxis("Vertical") * sensitivity * Time.deltaTime;
 
-        //If the users press * Then start zooming in
-        if (Input.GetKey(KeyCode.KeypadMultiply))
+        //If the users press + Then start zooming in
+        if (Input.GetKey(KeyCode.KeypadMinus))
         {
             StartCoroutine(Zoom(1));
         }
-        //If the users press / Then start zooming out
-        else if (Input.GetKey(KeyCode.KeypadDivide))
+        //If the users press - Then start zooming out
+        else if (Input.GetKey(KeyCode.KeypadPlus))
         {
             StartCoroutine(Zoom(-1));
         }
@@ -70,10 +70,10 @@ public class RamaBlueMovement : MonoBehaviour
             //Setting the zoom itself in the camera
             zoomSize = cameraGameobject.fieldOfView;
 
-            //Zooming in if the input was to zoom in
+            //Zooming in if the input was to zoom out
             if (zoomSize <= 55 && zoom == 1)
             {
-                //Zoom in slowly
+                //Zoom out slowly
                 for (int i = 0; i < 5; i++)
                 {
                     zoomSize++;
@@ -84,7 +84,7 @@ public class RamaBlueMovement : MonoBehaviour
                 zoomRatio = (zoomSize - 5) / 55;
                 sensitivity = minSpeed + zoomRatio * (maxSpeed - minSpeed);
             }
-            //Zooming out if the input was to zoom out
+            //Zooming out if the input was to zoom in
             else if (zoomSize >= 6 && zoom == -1)
             {
                 //Zoom in slowly

@@ -8,11 +8,16 @@ public class UiMenu : MonoBehaviour
     [Header("Cameras")]
     [SerializeField] private GameObject ramaBlue;
     [SerializeField] private GameObject blueWave;
+    [SerializeField] private GameObject camerasCanvas;
+
+    [Header("Main UI")]
+    [SerializeField] private GameObject followingButton;
     private void Awake()
     {
         //Activate 1 camera to show something
         ramaBlue.SetActive(true);
         blueWave.SetActive(false);
+        followingButton.SetActive(false);
 
         //Stop the time
         Time.timeScale = 0;
@@ -25,7 +30,8 @@ public class UiMenu : MonoBehaviour
             //Activate RamaBlue Camera and disable the other camera and the UI
             ramaBlue.SetActive(true);
             blueWave.SetActive(false);
-            gameObject.SetActive(false);
+            camerasCanvas.SetActive(false);
+            followingButton.SetActive(true);
 
             //Resume the time
             Time.timeScale = 1;
@@ -36,7 +42,8 @@ public class UiMenu : MonoBehaviour
             //Activate BlueWave Camera and disable the other camera and the UI
             ramaBlue.SetActive(false);
             blueWave.SetActive(true);
-            gameObject.SetActive(false);
+            camerasCanvas.SetActive(false);
+            followingButton.SetActive(true);
 
             //Resume the time
             Time.timeScale = 1;
