@@ -36,7 +36,7 @@ public class CamMovment : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
         save = new TargertJson();
     }
 
@@ -204,10 +204,10 @@ public class CamMovment : MonoBehaviour
                     cameraGameobject.fieldOfView = zoomSize;
                     yield return new WaitForSeconds(0.02f);
                 }
-                //Min Max Normlize
+               /* //Min Max Normlize
                 zoomRatio = (zoomSize - 5) / 55;
                 sensitivityX = minSpeed + zoomRatio * (maxSpeed - minSpeed);
-                sensitivityY = minSpeed + zoomRatio * (maxSpeed - minSpeed);
+                sensitivityY = minSpeed + zoomRatio * (maxSpeed - minSpeed);*/
             }
             //Zooming out if the input was to zoom out
             else if (zoomSize >= 6 && zoom == -1)
@@ -219,10 +219,10 @@ public class CamMovment : MonoBehaviour
                     cameraGameobject.fieldOfView = zoomSize;
                     yield return new WaitForSeconds(0.02f);
                 }
-                //Min Max Normlize
+              /*  //Min Max Normlize
                 zoomRatio = (zoomSize - 5) / 55;
                 sensitivityX = minSpeed + zoomRatio * (maxSpeed - minSpeed);
-                sensitivityY = minSpeed + zoomRatio * (maxSpeed - minSpeed);
+                sensitivityY = minSpeed + zoomRatio * (maxSpeed - minSpeed);*/
             }
             //Realsing the option to zoom again
             isZooming = false;

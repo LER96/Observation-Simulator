@@ -10,8 +10,8 @@ public class RoadPicker : MonoBehaviour
     [Header("Roads")]
     [SerializeField] private GameObject blueRoad;
     [SerializeField] private GameObject greenRoad;
-/*    [SerializeField] private GameObject yellowRoad;
-    [SerializeField] private GameObject redRoad;*/
+    //[SerializeField] private GameObject yellowRoad;
+    [SerializeField] private GameObject redRoad;
     private void Awake()
     {
         tankGameObject.SetActive(false);
@@ -37,14 +37,14 @@ public class RoadPicker : MonoBehaviour
             tankGameObject.SetActive(true);
             thisButton.SetActive(false);
 
-        }
+        }*/
         else if (randomNum == 4)
         {
             redRoad.SetActive(true);
             tankGameObject.SetActive(true);
             thisButton.SetActive(false);
         }
-*/
+
     }
 
 }
