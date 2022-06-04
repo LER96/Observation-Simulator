@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
+using TMPro;
 
 public class RamaBlueMovement : MonoBehaviour
 {
@@ -21,6 +23,11 @@ public class RamaBlueMovement : MonoBehaviour
     [SerializeField] private float minSpeed;
     [SerializeField] private float maxSpeed;
 
+    [SerializeField] private TextMeshProUGUI azimuthText;
+    [SerializeField] private TextMeshProUGUI hightText;
+    private float azimuth;
+    private float hight;
+
 
     // Start is called before the first frame update
     void Start()
@@ -34,6 +41,7 @@ public class RamaBlueMovement : MonoBehaviour
 
     void Update()
     {
+
         SetInputs();
         ClampAndRotation();
     }
@@ -106,10 +114,27 @@ public class RamaBlueMovement : MonoBehaviour
     
     private void ClampAndRotation()
     {
+        azimuth = gameObject.transform.localEulerAngles.y;
+        azimuth = Mathf.Round(azimuth);
+
+        azimuthText.text = azimuth.ToString("Azimuth: ") + azimuth;
+
+        //Sets the hight and round it up
+        
+        hight = -cameraGameobject.transform.localEulerAngles.x;
+        hight = Mathf.Round(hight);
+
+        if ((hight <= -350) && (hight >= -360))
+        {
+            hight += 360;
+        }
+      
+        hightText.text = "Hight: " + hight.ToString();
+
         //Rotating the head
         transform.Rotate(0, horizontalMovement, 0);
 
-        Vector3 eulerRotation = transform.rotation.eulerAngles;
+        Vector3 eulerRotation = transform.eulerAngles;
         if (eulerRotation.y > 180)
         {
             eulerRotation.y -= 360;
@@ -118,7 +143,7 @@ public class RamaBlueMovement : MonoBehaviour
         //Clamping the values according to BODY values (Left map Side clamp, Right map side clamp)
         eulerRotation.y = Mathf.Clamp(eulerRotation.y, -75, 0);
         //Clampong the values according to CAMERA values (Down map side clamp, Up map side clamp)
-        verticalMovement = Mathf.Clamp(verticalMovement, 0, 40);
+        verticalMovement = Mathf.Clamp(verticalMovement, -10, 40);
 
         //Rotating the camera
         transform.rotation = Quaternion.Euler(eulerRotation);
