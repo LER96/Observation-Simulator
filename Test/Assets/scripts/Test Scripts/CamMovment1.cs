@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-public class CamMovment1 : MonoBehaviour
+public class CamMovment : MonoBehaviour
 {
     float mouseX;
     float mouseY;
     string json;
     TargertJson save;
+    public int counter;
+    public bool ispress;
 
     [Header("Objects")]
     public Transform body;
@@ -40,7 +42,7 @@ public class CamMovment1 : MonoBehaviour
         save = new TargertJson();
     }
 
-    void Update()
+    private void Update()
     {
         side.text = "" + sensitivityX * 10;
         top.text = "" + sensitivityY * 10;
@@ -106,41 +108,12 @@ public class CamMovment1 : MonoBehaviour
         }
 
         //SaveTarget
-        if(Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            AddTarget(1);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            AddTarget(2);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            AddTarget(3);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            AddTarget(4);
-        }
-
-        //LoadTarget
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            GiveTarget(1);
+            ispress = true;
+            AddTarget();
         }
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            GiveTarget(2);
-        }
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            GiveTarget(3);
-        }
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            GiveTarget(4);
-        }
-
+        ispress = false;
     }
     void Move(int x, int y)
     {
@@ -154,27 +127,27 @@ public class CamMovment1 : MonoBehaviour
         body.Rotate(Vector3.up * mouseX);
     }
 
-    void AddTarget(int num)
+    public void AddTarget()
     {
-        int num1 = num - 1;
-        save.cam[num1] = transform.localRotation;
-        save.mainBody[num1] = body.localRotation;
+        save.cam.Add(transform.localRotation);
+        save.mainBody.Add(body.localRotation);
+        save.name = ""+counter;
         json = JsonUtility.ToJson(save);
         Debug.Log(json);
     }
 
-    void GiveTarget(int num)
+    public void GiveTarget()
     {
-        int num1 = num - 1;
         TargertJson loadeRotationData = JsonUtility.FromJson<TargertJson>(json);
-        transform.localRotation = loadeRotationData.cam[num1];
-        body.localRotation = loadeRotationData.mainBody[num1];
+        transform.localRotation = loadeRotationData.cam[counter];
+        body.localRotation = loadeRotationData.mainBody[counter];
     }
 
     private class TargertJson
     {
-        public Quaternion []cam= new Quaternion[5];
-        public Quaternion []mainBody= new Quaternion[5];
+        public List<Quaternion> cam;
+        public List<Quaternion> mainBody;
+        public string name = "";
     }
 
 }
