@@ -114,22 +114,29 @@ public class RamaBlueMovement : MonoBehaviour
     
     private void ClampAndRotation()
     {
+        //Sets the azimuth value in a float
         azimuth = gameObject.transform.localEulerAngles.y;
-        azimuth = Mathf.Round(azimuth);
 
-        azimuthText.text = azimuth.ToString("Azimuth: ") + azimuth;
+        //Inverts the amount of hight and add 360 to its (to display +10 instead of +350)
+        if ((azimuth >= 285) && (azimuth <= 360))
+        {
+            azimuth -= 360;
+        }
+
+        //Display the azimuth in the UI          Round up the float to 2 decimal
+        azimuthText.text = "Azimuth: " + azimuth.ToString("#0.00");
 
         //Sets the hight and round it up
-        
         hight = -cameraGameobject.transform.localEulerAngles.x;
-        hight = Mathf.Round(hight);
 
+        //Inverts the amount of hight and add 360 to its (to display +10 instead of +350)
         if ((hight <= -350) && (hight >= -360))
         {
             hight += 360;
         }
-      
-        hightText.text = "Hight: " + hight.ToString();
+
+        //Display the hight in the UI       Round up the float to 2 decimal
+        hightText.text = "Hight: " + hight.ToString("#0.00");
 
         //Rotating the head
         transform.Rotate(0, horizontalMovement, 0);
@@ -141,7 +148,7 @@ public class RamaBlueMovement : MonoBehaviour
         }
 
         //Clamping the values according to BODY values (Left map Side clamp, Right map side clamp)
-        eulerRotation.y = Mathf.Clamp(eulerRotation.y, -75, 0);
+        eulerRotation.y = Mathf.Clamp(eulerRotation.y, -75, 10);
         //Clampong the values according to CAMERA values (Down map side clamp, Up map side clamp)
         verticalMovement = Mathf.Clamp(verticalMovement, -10, 40);
 
